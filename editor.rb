@@ -1,13 +1,20 @@
 @results = []
 def analyze(paragraph)
-  @words = paragraph.gsub(/[^0-9a-z ]/i, '').split(" ")
-  @words.each do |word|
-    word.downcase!
+  words = paragraph.gsub(/[^a-z ]/i, '').split(" ")
+  word_lengths = []
+  words.each do |word|
+    word_lengths << word.length
   end
-  @unique_words = @words.uniq
-  @unique_words.each do |word|
-    number = @words.count(word)
-    @results << [word, number]
+  word_lengths.uniq!
+
+  word_lengths.each do |length|
+    counter = 0
+    words.each do |word|
+      if length == word.length
+        counter += 1
+      end
+    end
+    @results << [length, counter]
   end
 end
 
